@@ -1,0 +1,41 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Author {
+    id     Int     @id @default(autoincrement())
+    name   String  @unique
+    age    Int
+    movies Movie[]
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+}
+
+model Movie {
+    id       Int    @id @default(autoincrement())
+    name     String @unique
+    duration Float
+    authorId Int
+    author   Author @relation(fields: [authorId], references: [id])
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+}
+
+model User {
+    id       Int     @id @default(autoincrement())
+    fistName String
+    latsName String?
+
+    email    String @unique
+    password String
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+}
