@@ -28,6 +28,11 @@ model Movie {
     updateAt  DateTime @updatedAt
 }
 
+model Category {
+    id   Int    @id @default(autoincrement())
+    name String @unique
+}
+
 model User {
     id       Int     @id @default(autoincrement())
     fistName String
