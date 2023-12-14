@@ -35,12 +35,14 @@ model Category {
 
 model User {
     id       Int     @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
     fistName String
     latsName String?
 
     email    String @unique
     password String
-
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    hash String
+    hashedRt String?
 }
