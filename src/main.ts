@@ -4,6 +4,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 
 async function bootstrap() {
@@ -11,6 +12,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter()
   );
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
 

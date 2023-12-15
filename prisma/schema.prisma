@@ -42,7 +42,8 @@ model User {
     latsName String?
 
     email    String @unique
-    password String
-    hash String
+    hashedPassword String
     hashedRt String?
+
+    @@map("users")
 }
