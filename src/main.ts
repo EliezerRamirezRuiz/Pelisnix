@@ -5,6 +5,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { AtGuard } from './common/guards';
 
 
 async function bootstrap() {
@@ -13,6 +14,8 @@ async function bootstrap() {
     new FastifyAdapter()
   );
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalGuards(new AtGuard());
+  
   await app.listen(3000);
 }
 

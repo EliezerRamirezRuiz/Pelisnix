@@ -42,35 +42,55 @@ export class AuthService {
             },
         });
 
-        if (!user) throw new ForbiddenException('Access Denied');
+        if (!user || !user.hashedRt) throw new ForbiddenException('Access Denied');
 
         const passwordMatches = await bcript.compare(userDto.password, user.hashedPassword);
 
         if (!passwordMatches) throw new ForbiddenException('Access Denied');
 
         const tokens = await this.getTokens(user.id, user.email);
+
         await this.updateRtHash(user.id, tokens.refresh_token);
+
         return tokens;
     };
 
 
-    async logout(userId: number) {
+    async logout(userId: number): Promise<void> {
         await this.prismaService.user
             .updateMany({
-                where:{
+                where: {
                     id: userId,
-                    hashedRt:{
+                    hashedRt: {
                         not: null
                     },
                 },
-                data:{
+                data: {
                     hashedRt: null
                 }
             })
     };
 
 
-    async refreshToken() { };
+    async refreshToken(userId: number, rt: string): Promise<Token> {
+        const user = await this.prismaService.user.findUnique({
+            where: {
+                id: userId,
+            },
+        });
+
+        if (!user) throw new ForbiddenException('Access Denied');
+
+        const rtMatches = await bcript.compare(rt, user.hashedRt);
+
+        if (!rtMatches) throw new ForbiddenException('Access Denied');
+
+        const tokens = await this.getTokens(user.id, user.email);
+
+        await this.updateRtHash(user.id, tokens.refresh_token);
+
+        return tokens;
+    };
 
 
     async updateRtHash(userId: number, rt: string): Promise<void> {
