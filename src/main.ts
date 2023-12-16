@@ -14,8 +14,6 @@ async function bootstrap() {
     new FastifyAdapter()
   );
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalGuards(new AtGuard());
-  
   await app.listen(3000);
 }
 
