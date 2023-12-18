@@ -3,9 +3,11 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+
 generator client {
     provider = "prisma-client-js"
 }
+
 
 model Author {
     id     Int     @id @default(autoincrement())
@@ -15,31 +17,46 @@ model Author {
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
+
+
+    @@map("authors")
 }
+
+
+model Category {
+    id   Int    @id @default(autoincrement())
+    name String @unique
+    
+    movie Movie[]
+
+    @@map("categories")
+}
+
 
 model Movie {
     id       Int    @id @default(autoincrement())
     name     String @unique
     duration Float
-    authorId Int
-    author   Author @relation(fields: [authorId], references: [id])
+    authorId Int @unique
+    categoryId Int @unique
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    updatedAt  DateTime @updatedAt
+
+    author   Author @relation(fields: [authorId], references: [id])
+    category Category @relation(fields: [categoryId], references: [id])
+
+    @@map("movies")
 }
 
-model Category {
-    id   Int    @id @default(autoincrement())
-    name String @unique
-}
 
 model User {
     id       Int     @id @default(autoincrement())
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    updatedAt  DateTime @updatedAt
 
-    fistName String
-    latsName String?
+    firstName String
+    lastName String?
 
     email    String @unique
     hashedPassword String

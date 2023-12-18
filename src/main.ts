@@ -5,7 +5,6 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { AtGuard } from './common/guards';
 
 
 async function bootstrap() {

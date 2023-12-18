@@ -1,12 +1,14 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-
+// services
 import { PrismaService } from 'src/prisma/prisma.service';
-
-import * as bcript from 'bcrypt';
-import CreateUserDto from './dto/create-user.dto';
-import { Token } from './types/token.type';
 import { JwtService } from '@nestjs/jwt';
+// dto
+import CreateUserDto from './dto/create-user.dto';
 import AuthUserDto from './dto/auth-user.dto';
+// types
+import { Token } from './types/token.type';
+// hashing
+import * as bcript from 'bcrypt';
 
 
 
@@ -23,12 +25,13 @@ export class AuthService {
 
         const newUser = this.prismaService.user.create({
             data: {
-                fistName: user.fistName,
-                latsName: user.latsName,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 email: user.email,
                 hashedPassword: hash,
             },
         });
+        
         const tokens = await this.getTokens((await newUser).id, (await newUser).email);
         await this.updateRtHash((await newUser).id, tokens.refresh_token);
         return tokens;
