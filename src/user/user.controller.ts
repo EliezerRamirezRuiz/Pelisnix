@@ -17,7 +17,7 @@ export class UserController {
     ) { };
 
 
-    @Put('')
+    @Put('/')
     @HttpCode(HttpStatus.OK)
     async updateDataUser(
         @Body() updateUser: UpdateUserDto,
@@ -35,7 +35,7 @@ export class UserController {
     };
 
 
-    @Put('')
+    @Put('/password')
     @HttpCode(HttpStatus.OK)
     async updatePasswordUser(
         @Body() userPassword: string,

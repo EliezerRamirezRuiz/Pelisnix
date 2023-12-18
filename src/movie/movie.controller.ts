@@ -9,25 +9,25 @@ export class MovieController {
     constructor(private movieService: MovieService) { }
 
 
-    @Get(':id')
+    @Get('/id/:id')
     async getMovieById(@Param('id') id: string): Promise<IMovie> {
         return await this.movieService.getMovieById(Number(id));
     };
 
 
-    @Get(':name')
+    @Get('/name/:name')
     async getMovieByName(@Param('name') name: string): Promise<IMovie> {
         return await this.movieService.getMovieByName(name);
     };
 
 
-    @Get(':authorId')
+    @Get('/authorId/:authorId')
     async getMovieByAuthorId(@Param('authorId') authorId: string) {
         return await this.movieService.getMovieByAuthorId(Number(authorId));
     };
 
 
-    @Post('')
+    @Post('/')
     async createMovie(@Body() movie: CreateMovieDto): Promise<IMovie> {
         return this.movieService.createMovie(movie);
     };

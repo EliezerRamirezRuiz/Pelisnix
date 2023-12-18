@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
+
 import { PrismaService } from 'src/prisma/prisma.service';
+
 import { IMovie } from './interfaces/movie.interface';
+
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 
 
-@Injectable()
+@Injectable({})
 export class MovieService {
     constructor(private prismaService: PrismaService) { }
 

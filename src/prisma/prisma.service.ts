@@ -8,20 +8,17 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         super({
             datasources: {
                 db: {
-                    url: '',
+                    url: 'postgresql://postgres:postgres@localhost:5432/mydb?schema=public',
                 },
             },
         });
     };
 
-
-
     async onModuleInit() {
         await this.$connect();
-    }
-
+    };
 
     async onModuleDestroy() {
         await this.$disconnect();
-    }
+    };
 }
