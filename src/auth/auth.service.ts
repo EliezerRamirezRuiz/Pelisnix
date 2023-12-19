@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
@@ -49,7 +49,7 @@ export class AuthService {
 
         const passwordMatches = await bcript.compare(userDto.password, user.hashedPassword);
 
-        if (!passwordMatches) throw new ForbiddenException('Access Denied');
+        if (!passwordMatches) throw new UnauthorizedException('Access Denied');
 
         const tokens = await this.getTokens(user.id, user.email);
 
