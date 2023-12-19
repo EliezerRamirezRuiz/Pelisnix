@@ -7,6 +7,9 @@ import { UserModule } from './user/user.module';
 // Guard
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards';
+import { CategoryController } from './category/category.controller';
+import { CategoryService } from './category/category.service';
+import { CategoryModule } from './category/category.module';
 
 
 @Module({
@@ -15,12 +18,15 @@ import { AtGuard } from './common/guards';
     PrismaModule,
     MovieModule,
     UserModule,
+    CategoryModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: AtGuard,
     },
+    CategoryService,
   ],
+  controllers: [CategoryController],
 })
 export class AppModule { }
