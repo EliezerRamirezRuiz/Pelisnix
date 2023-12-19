@@ -33,18 +33,31 @@ model Category {
 }
 
 
+model Genre {
+    id Int @id @default(autoincrement())
+    name String @unique
+
+    movie Movie[]
+
+    @@map("genres")
+}
+
+
 model Movie {
     id       Int    @id @default(autoincrement())
     name     String @unique
     duration Float
+
     authorId Int @unique
     categoryId Int @unique
+    genreId Int @unique
 
     createdAt DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
     author   Author @relation(fields: [authorId], references: [id])
     category Category @relation(fields: [categoryId], references: [id])
+    genre Genre @relation(fields: [genreId], references: [id])
 
     @@map("movies")
 }
