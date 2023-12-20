@@ -33,13 +33,13 @@ model Category {
 }
 
 
-model Genre {
+model Gender {
     id Int @id @default(autoincrement())
     name String @unique
 
     movie Movie[]
 
-    @@map("genres")
+    @@map("genders")
 }
 
 
@@ -50,14 +50,14 @@ model Movie {
 
     authorId Int @unique
     categoryId Int @unique
-    genreId Int @unique
+    genderId Int @unique
 
     createdAt DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
     author   Author @relation(fields: [authorId], references: [id])
     category Category @relation(fields: [categoryId], references: [id])
-    genre Genre @relation(fields: [genreId], references: [id])
+    genre Gender @relation(fields: [genderId], references: [id])
 
     @@map("movies")
 }
