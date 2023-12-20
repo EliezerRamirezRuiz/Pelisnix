@@ -20,21 +20,11 @@ export class CategoryController {
 
 
     @Get(':id')
-    async getCategoryById(
+    async getCategory(
         @Param('id') id: number
     ): Promise<ICategory> {
-        return await this.categoryService.getCategoryById(
+        return await this.categoryService.getCategory(
             id,
-        );
-    };
-
-
-    @Get(':name')
-    async getCategoryByName(
-        @Param('name') name: string
-    ): Promise<ICategory> {
-        return await this.categoryService.getCategoryByName(
-            name,
         );
     };
 
@@ -51,10 +41,8 @@ export class CategoryController {
     };
 
 
-    @Delete('')
-    async deleteCategory(
-        @Body() id: string,
-    ) {
+    @Delete(':id')
+    async deleteCategory(@Param('id') id: string,): Promise<ICategory> {
         return await this.categoryService.deleteCategory(
             Number(id),
         );

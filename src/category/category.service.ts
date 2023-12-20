@@ -26,19 +26,10 @@ export class CategoryService {
     };
 
 
-    async getCategoryById(id: number): Promise<ICategory> {
+    async getCategory(id: number): Promise<ICategory> {
         return await this.prismaService.category.findUnique({
             where: {
                 id,
-            },
-        });
-    };
-
-
-    async getCategoryByName(name: string): Promise<ICategory> {
-        return await this.prismaService.category.findUnique({
-            where: {
-                name
             },
         });
     };
