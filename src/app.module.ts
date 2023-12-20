@@ -4,12 +4,11 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { MovieModule } from './movie/movie.module';
 import { UserModule } from './user/user.module';
+import { CategoryModule } from './category/category.module';
+import { GenderModule } from './gender/gender.module';
 // Guard
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards';
-import { CategoryController } from './category/category.controller';
-import { CategoryService } from './category/category.service';
-import { CategoryModule } from './category/category.module';
 
 
 @Module({
@@ -19,14 +18,14 @@ import { CategoryModule } from './category/category.module';
     MovieModule,
     UserModule,
     CategoryModule,
+    GenderModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: AtGuard,
     },
-    CategoryService,
   ],
-  controllers: [CategoryController],
+
 })
 export class AppModule { }
