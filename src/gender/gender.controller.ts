@@ -26,27 +26,17 @@ export class GenderController {
     };
 
 
-    @Get('id/:id')
+    @Get(':id')
     async getGenderById(
         @Param('id') id: string,
     ): Promise<IGender> {
-        return await this.genderService.getGenderById(
+        return await this.genderService.getGender(
             Number(id),
         );
     };
 
 
-    @Get('name/:name')
-    async getGenderByName(
-        @Param('name') name: string,
-    ): Promise<IGender> {
-        return await this.genderService.getGenderByName(
-            name,
-        );
-    };
-
-
-    @Put('')
+    @Put(':id')
     async updateGender(
         @Param('id') id: string,
         @Body() data: UpdateGenderDto
@@ -58,9 +48,9 @@ export class GenderController {
     };
 
 
-    @Delete('')
+    @Delete(':id')
     async deleteGender(
-        @Body() id: string,
+        @Param('id') id: string,
     ): Promise<IGender> {
         return await this.genderService.deleteGender(
             Number(id),

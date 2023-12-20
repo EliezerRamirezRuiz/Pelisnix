@@ -25,19 +25,10 @@ export class GenderService {
     };
 
 
-    async getGenderById(id: number): Promise<IGender> {
+    async getGender(id: number): Promise<IGender> {
         return await this.prismaService.gender.findUnique({
             where: {
                 id,
-            },
-        });
-    };
-
-
-    async getGenderByName(name: string): Promise<IGender> {
-        return await this.prismaService.gender.findUnique({
-            where: {
-                name,
             },
         });
     };
