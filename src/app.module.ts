@@ -9,6 +9,9 @@ import { GenderModule } from './gender/gender.module';
 // Guard
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards';
+import { AuthorController } from './author/author.controller';
+import { AuthorService } from './author/author.service';
+import { AuthorModule } from './author/author.module';
 
 
 @Module({
@@ -19,13 +22,16 @@ import { AtGuard } from './common/guards';
     UserModule,
     CategoryModule,
     GenderModule,
+    AuthorModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: AtGuard,
     },
+    AuthorService,
   ],
+  controllers: [AuthorController],
 
 })
 export class AppModule { }
