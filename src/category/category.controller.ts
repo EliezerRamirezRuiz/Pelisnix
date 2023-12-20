@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { ICategory } from './interfaces/category.interface';
@@ -9,10 +9,13 @@ export class CategoryController {
     constructor(private categoryService: CategoryService) { };
 
 
+    @Post('')
     async createCategory(
         @Body() data: CreateCategoryDto
     ): Promise<CreateCategoryDto> {
-        return await this.categoryService.createCategory(data);
+        return await this.categoryService.createCategory(
+            data,
+        );
     };
 
 
@@ -20,7 +23,9 @@ export class CategoryController {
     async getCategoryById(
         @Param('id') id: number
     ): Promise<ICategory> {
-        return await this.categoryService.getCategoryById(id);
+        return await this.categoryService.getCategoryById(
+            id,
+        );
     };
 
 
@@ -28,7 +33,9 @@ export class CategoryController {
     async getCategoryByName(
         @Param('name') name: string
     ): Promise<ICategory> {
-        return await this.categoryService.getCategoryByName(name);
+        return await this.categoryService.getCategoryByName(
+            name,
+        );
     };
 
 
@@ -44,10 +51,12 @@ export class CategoryController {
     };
 
 
-    @Delete(':id')
+    @Delete('')
     async deleteCategory(
-        @Param('id') id: string,
+        @Body() id: string,
     ) {
-        return await this.categoryService.deleteCategory(Number(id));
+        return await this.categoryService.deleteCategory(
+            Number(id),
+        );
     };
 }
