@@ -16,4 +16,8 @@ export class CreateMovieDto{
     @IsNumber()
     @IsNotEmpty()
     categoryId: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    genderId: number;
 };

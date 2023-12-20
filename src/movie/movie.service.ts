@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -6,11 +6,17 @@ import { IMovie } from './interfaces/movie.interface';
 
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { CategoryService } from 'src/category/category.service';
+import { GenderService } from 'src/gender/gender.service';
 
 
 @Injectable({})
 export class MovieService {
-    constructor(private prismaService: PrismaService) { }
+    constructor(
+        private prismaService: PrismaService,
+        private categoryService: CategoryService,
+        private genderService: GenderService,
+    ) { };
 
 
     async getMovieById(id: number): Promise<IMovie> {
@@ -49,6 +55,13 @@ export class MovieService {
 
 
     async createMovie(movie: CreateMovieDto): Promise<IMovie> {
+        const categoryFounded = await this.categoryService.getCategoryById(movie.categoryId);
+        if (!categoryFounded) throw new NotFoundException('category not founded');
+
+        const genderFounded = await this.genderService.getGenderById(movie.genderId);
+        if (!genderFounded) throw new NotFoundException('gender not found');
+
+
         const movieCreated = await this.prismaService.movie.create({
             data: {
                 name: movie.name,
@@ -60,8 +73,13 @@ export class MovieService {
                 },
                 category: {
                     connect: {
-                        id: movie.categoryId
+                        id: categoryFounded.id
                     }
+                },
+                genre: {
+                    connect: {
+                        id: genderFounded.id
+                    },
                 },
             },
         });
@@ -70,19 +88,20 @@ export class MovieService {
     };
 
 
-    async updateMovie(id: number, movie: UpdateMovieDto): Promise<IMovie> {
-        const movieUpdated = this.prismaService.movie
-            .update({
-                where: {
-                    id
-                },
-                data: {
-                    name: movie.name,
-                    duration: movie.duration,
-                    authorId: movie.authorId,
-                    categoryId: movie.categoryId,
-                },
-            });
+    async updateMovie(movie: UpdateMovieDto): Promise<IMovie> {
+        const id: number = movie.id
+        const movieUpdated = this.prismaService.movie.update({
+            where: {
+                id
+            },
+            data: {
+                name: movie.name,
+                duration: movie.duration,
+                authorId: movie.authorId,
+                categoryId: movie.categoryId,
+                genderId: movie.genderId
+            },
+        });
         return movieUpdated;
     }
 
