@@ -14,19 +14,19 @@ export class GenderService {
     async createGender(
         data: CreateGenderDto
     ): Promise<CreateGenderDto> {
-        return await this.prismaService.genre.create({
+        return await this.prismaService.gender.create({
             data
         });
     };
 
 
     async getGenders(): Promise<IGender[]> {
-        return await this.prismaService.genre.findMany();
+        return await this.prismaService.gender.findMany();
     };
 
 
     async getGenderById(id: number): Promise<IGender> {
-        return await this.prismaService.genre.findUnique({
+        return await this.prismaService.gender.findUnique({
             where: {
                 id,
             },
@@ -35,7 +35,7 @@ export class GenderService {
 
 
     async getGenderByName(name: string): Promise<IGender> {
-        return await this.prismaService.genre.findUnique({
+        return await this.prismaService.gender.findUnique({
             where: {
                 name,
             },
@@ -47,7 +47,7 @@ export class GenderService {
         id: number,
         data: UpdateGenderDto
     ): Promise<UpdateGenderDto> {
-        return await this.prismaService.genre.update({
+        return await this.prismaService.gender.update({
             where: {
                 id,
             },
@@ -59,7 +59,7 @@ export class GenderService {
     async deleteGender(
         id: number
     ): Promise<IGender> {
-        return await this.prismaService.genre.delete({
+        return await this.prismaService.gender.delete({
             where: {
                 id
             },
