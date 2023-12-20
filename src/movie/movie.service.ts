@@ -8,6 +8,7 @@ import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { CategoryService } from 'src/category/category.service';
 import { GenderService } from 'src/gender/gender.service';
+import { AuthorService } from 'src/author/author.service';
 
 
 @Injectable({})
@@ -16,6 +17,7 @@ export class MovieService {
         private prismaService: PrismaService,
         private categoryService: CategoryService,
         private genderService: GenderService,
+        private authorService: AuthorService,
     ) { };
 
 
@@ -55,12 +57,14 @@ export class MovieService {
 
 
     async createMovie(movie: CreateMovieDto): Promise<IMovie> {
-        const categoryFounded = await this.categoryService.getCategoryById(movie.categoryId);
+        const categoryFounded = await this.categoryService.getCategory(movie.categoryId);
         if (!categoryFounded) throw new NotFoundException('category not founded');
 
-        const genderFounded = await this.genderService.getGenderById(movie.genderId);
+        const genderFounded = await this.genderService.getGender(movie.genderId);
         if (!genderFounded) throw new NotFoundException('gender not found');
 
+        const authorFounded = await this.authorService.getAuthor(movie.authorId);
+        if (!authorFounded) throw new NotFoundException('author not found');
 
         const movieCreated = await this.prismaService.movie.create({
             data: {
@@ -88,22 +92,25 @@ export class MovieService {
     };
 
 
-    async updateMovie(movie: UpdateMovieDto): Promise<IMovie> {
-        const id: number = movie.id
+    async updateMovie(
+        id: number,
+        movie: UpdateMovieDto
+    ): Promise<IMovie> {
         const movieUpdated = this.prismaService.movie.update({
             where: {
-                id
+                id,
             },
             data: {
                 name: movie.name,
                 duration: movie.duration,
                 authorId: movie.authorId,
                 categoryId: movie.categoryId,
-                genderId: movie.genderId
+                genderId: movie.genderId,
             },
         });
+
         return movieUpdated;
-    }
+    };
 
 
     async deleteMovie(id: number): Promise<IMovie> {

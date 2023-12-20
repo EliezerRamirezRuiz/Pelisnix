@@ -19,7 +19,9 @@ export class MovieController {
 
 
     @Get('/id/:id')
-    async getMovieById(@Param('id') id: string): Promise<IMovie> {
+    async getMovieById(
+        @Param('id') id: string
+    ): Promise<IMovie> {
         return await this.movieService.getMovieById(
             Number(id),
         );
@@ -27,7 +29,9 @@ export class MovieController {
 
 
     @Get('/name/:name')
-    async getMovieByName(@Param('name') name: string): Promise<IMovie> {
+    async getMovieByName(
+        @Param('name') name: string
+    ): Promise<IMovie> {
         return await this.movieService.getMovieByName(
             name,
         );
@@ -35,29 +39,33 @@ export class MovieController {
 
 
     @Get('/authorId/:authorId')
-    async getMovieByAuthorId(@Param('authorId') authorId: string) {
+    async getMovieByAuthorId(
+        @Param('authorId') authorId: string
+    ) {
         return await this.movieService.getMovieByAuthorId(
             Number(authorId),
         );
     };
 
 
-    @Put('/')
+    @Put(':id')
     async updateMovie(
+        @Param('id') id: string,
         @Body() movie: UpdateMovieDto
     ): Promise<IMovie> {
         return await this.movieService.updateMovie(
+            Number(id),
             movie,
         );
     };
 
 
-    @Delete('/')
+    @Delete(':id')
     async deleteMovie(
-        @Body() id: number
+        @Param('id') id: string
     ): Promise<IMovie> {
         return this.movieService.deleteMovie(
-            id,
+            Number(id),
         );
     };
 };
