@@ -73,7 +73,7 @@ model User {
     hashedPassword String
     hashedRt String?
 
-    admin Boolean @default(false)
+    isAdmin Boolean @default(false)
 
     createdAt DateTime @default(now())
     updatedAt  DateTime @updatedAt
