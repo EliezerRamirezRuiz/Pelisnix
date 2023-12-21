@@ -18,11 +18,7 @@ export class CategoryService {
 
 
     async getCategories(): Promise<ICategory[]> {
-        return await this.prismaService.category.findMany(
-            {
-                distinct: 'id',
-            },
-        );
+        return await this.prismaService.category.findMany();
     };
 
 

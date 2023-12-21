@@ -1,8 +1,14 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+
 import { CategoryService } from './category.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
+
 import { ICategory } from './interfaces/category.interface';
+
+import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+
+import { Public } from 'src/common/decorators';
+
 
 @Controller('v1/category')
 export class CategoryController {
@@ -19,6 +25,7 @@ export class CategoryController {
     };
 
 
+    @Public()
     @Get(':id')
     async getCategory(
         @Param('id') id: number
@@ -29,6 +36,13 @@ export class CategoryController {
     };
 
 
+    @Public()
+    @Get('')
+    async getCategories(): Promise<ICategory[]>{
+        return this.categoryService.getCategories();
+    };
+
+    
     @Put(':id')
     async updateCategory(
         @Param('id') id: string,

@@ -3,6 +3,7 @@ import { AuthorService } from './author.service';
 import CreateAuthorDto from './dto/create-author.dto';
 import IAuthor from './interfaces/author.interface';
 import UpdateAuthorDto from './dto/update-author.dto';
+import { Public } from 'src/common/decorators';
 
 @Controller('v1/author')
 export class AuthorController {
@@ -16,13 +17,15 @@ export class AuthorController {
         return await this.authorService.createAuthor(data)
     };
 
-
+    
+    @Public()
     @Get('/')
     async getAuthors(): Promise<IAuthor[]> {
         return await this.authorService.getAuthors();
     };
 
 
+    @Public()
     @Get('/:id')
     async getAuthor(
         @Param('id') id: string

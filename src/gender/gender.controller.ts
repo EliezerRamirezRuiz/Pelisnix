@@ -3,6 +3,7 @@ import { GenderService } from './gender.service';
 import { CreateGenderDto } from './dto/create-gender.dto';
 import { IGender } from './interfaces/gender.interfaces';
 import { UpdateGenderDto } from './dto/update-gender.dto';
+import { Public } from 'src/common/decorators';
 
 
 @Controller('v1/gender')
@@ -20,12 +21,15 @@ export class GenderController {
         );
     };
 
-
+    
+    @Public()
+    @Get('')
     async getGenders(): Promise<IGender[]> {
         return await this.genderService.getGenders();
     };
 
 
+    @Public()
     @Get(':id')
     async getGenderById(
         @Param('id') id: string,

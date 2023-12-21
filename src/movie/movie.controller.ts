@@ -3,6 +3,7 @@ import { MovieService } from './movie.service';
 import { IMovie } from './interfaces/movie.interface';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { Public } from 'src/common/decorators';
 
 @Controller('v1/movie')
 export class MovieController {
@@ -18,6 +19,7 @@ export class MovieController {
     };
 
 
+    @Public()
     @Get('/id/:id')
     async getMovieById(
         @Param('id') id: string
@@ -28,6 +30,7 @@ export class MovieController {
     };
 
 
+    @Public()
     @Get('/name/:name')
     async getMovieByName(
         @Param('name') name: string
@@ -37,7 +40,8 @@ export class MovieController {
         );
     };
 
-
+    
+    @Public()
     @Get('/authorId/:authorId')
     async getMovieByAuthorId(
         @Param('authorId') authorId: string
